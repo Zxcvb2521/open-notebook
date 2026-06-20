@@ -1,8 +1,8 @@
 # Open Notebook Uninstaller
 $AppName = "Open Notebook"
 $InstallDir = Join-Path $env:LOCALAPPDATA $AppName
-$StartMenuDir = Join-Path ([Environment]::GetFolderPath("StartMenu")) "Programs\$AppName"
-$DesktopDir = [Environment]::GetFolderPath("Desktop")
+$StartMenuDir = Join-Path $env:USERPROFILE "AppData\Roaming\Microsoft\Windows\Start Menu\Programs\$AppName"
+$DesktopDir = Join-Path $env:USERPROFILE "Desktop"
 $UninstallKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${AppName}"
 
 # Check admin

@@ -5,6 +5,8 @@ set PROJECT_ROOT=%~dp0
 set PROJECT_ROOT=%PROJECT_ROOT:~0,-1%
 
 set DESKTOP=%USERPROFILE%\Desktop
+set LAUNCHER=%PROJECT_ROOT%\OpenNotebook.exe
+if not exist "%LAUNCHER%" set LAUNCHER=%PROJECT_ROOT%\run.bat
 
 echo ============================================
 echo   Open Notebook - Install Shortcuts
@@ -15,7 +17,7 @@ echo.
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
 "$ws = New-Object -ComObject WScript.Shell;" ^
 "$sc = $ws.CreateShortcut('%DESKTOP%\Open Notebook.lnk');" ^
-"$sc.TargetPath = '%PROJECT_ROOT%\OpenNotebook.bat';" ^
+"$sc.TargetPath = '%LAUNCHER%';" ^
 "$sc.WorkingDirectory = '%PROJECT_ROOT%';" ^
 "$sc.Description = 'Open Notebook - AI-powered research assistant';" ^
 "$sc.IconLocation = '%SystemRoot%\System32\imageres.dll,199';" ^
@@ -32,7 +34,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
 "Write-Host '  [+] Shortcut created: Desktop\Open Notebook - Stop.lnk';" ^
 "" ^
 "$sc3 = $ws.CreateShortcut('%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Open Notebook.lnk');" ^
-"$sc3.TargetPath = '%PROJECT_ROOT%\OpenNotebook.bat';" ^
+"$sc3.TargetPath = '%LAUNCHER%';" ^
 "$sc3.WorkingDirectory = '%PROJECT_ROOT%';" ^
 "$sc3.Description = 'Open Notebook - AI-powered research assistant';" ^
 "$sc3.IconLocation = '%SystemRoot%\System32\imageres.dll,199';" ^
@@ -44,7 +46,7 @@ echo ============================================
 echo   Shortcuts installed!
 echo.
 echo   Desktop:
-echo     Open Notebook.lnk       - Launch (tray)
+echo     Open Notebook.lnk       - Launch
 echo     Open Notebook - Stop.lnk - Stop all
 echo.
 echo   Start Menu:
