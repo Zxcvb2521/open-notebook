@@ -20,9 +20,16 @@ if not os.path.exists(ENV_FILE):
     if os.path.exists(env_example):
         import shutil
         shutil.copy2(env_example, ENV_FILE)
+        # Fix host and generate key
+        with open(ENV_FILE, "r", encoding="utf-8") as f:
+            c = f.read()
+        c = c.replace("change-me-to-a-secret-string", os.urandom(16).hex())
+        c = c.replace("ws://surrealdb:8000/rpc", "ws://localhost:8000/rpc")
+        with open(ENV_FILE, "w", encoding="utf-8") as f:
+            f.write(c)
         print(f"[.] Created .env from .env.example")
     else:
-        with open(ENV_FILE, "w") as f:
+        with open(ENV_FILE, "w", encoding="utf-8") as f:
             f.write(f'OPEN_NOTEBOOK_ENCRYPTION_KEY={os.urandom(16).hex()}\n')
             f.write(f'SURREAL_URL=ws://localhost:8000/rpc\n')
             f.write(f'SURREAL_USER=root\n')
@@ -146,13 +153,13 @@ def run_services():
         stop_all(); return
     
     log("Starting FastAPI...")
-    start_proc("FastAPI", ['cmd.exe', '/c', f'cd /d {PROJECT_ROOT.replace(chr(92),"/")} && uv run --env-file "{ENV_FILE.replace(chr(92),"/")}" uvicorn api.main:app --host 127.0.0.1 --port 5055'],
+    start_proc("FastAPI", ['cmd.exe', '/c', f'cd /d {PROJECT_ROOT.replace(chr(92),"/")} && uv run --env-file {ENV_FILE.replace(chr(92),"/")} uvicorn api.main:app --host 127.0.0.1 --port 5055'],
         shell=False)
     if not wait_url("http://localhost:5055/docs", 60, "FastAPI"):
         stop_all(); return
     
     log("Starting Worker...")
-    start_proc("Worker", ['cmd.exe', '/c', f'cd /d {PROJECT_ROOT.replace(chr(92),"/")} && uv run --env-file "{ENV_FILE.replace(chr(92),"/")}" surreal-commands-worker --import-modules commands'],
+    start_proc("Worker", ['cmd.exe', '/c', f'cd /d {PROJECT_ROOT.replace(chr(92),"/")} && uv run --env-file {ENV_FILE.replace(chr(92),"/")} surreal-commands-worker --import-modules commands'],
         shell=False)
     
     log("Starting Frontend...")
