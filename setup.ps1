@@ -1,4 +1,4 @@
-# Open Notebook Installer
+﻿# Open Notebook Installer
 # Запускать от Администратора: powershell -ExecutionPolicy Bypass -File setup.ps1
 # Всё устанавливается автоматически. Никаких ручных действий.
 
