@@ -1,0 +1,1 @@
+& "$PSScriptRoot\start-all.ps1" -Stop
