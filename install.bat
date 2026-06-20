@@ -115,13 +115,20 @@ echo.
 echo ============================================
 echo   Install complete!
 echo.
-echo   Quick start:  OpenNotebook.bat    (tray icon, hidden)
+echo   Desktop App (native window, no browser):
+echo     desktop\OpenNotebook-Desktop.bat
+echo     desktop\install.bat
+echo.
+echo   Quick start:  OpenNotebook.bat    (tray icon)
 echo   Classic:      start-all.bat       (visible windows)
 echo   To stop:      run.bat -stop
-echo   To remove:    uninstall.bat
 echo.
-echo   Optional: run install-shortcuts.bat
-echo     to create Desktop and Start Menu shortcuts.
+echo   Windows Service (Admin):
+echo     install-service.bat
+echo     uninstall-service.bat
+echo.
+echo   Shortcuts:
+echo     install-shortcuts.bat
 echo ============================================
 echo.
 

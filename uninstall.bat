@@ -101,12 +101,17 @@ if exist "%PROJECT_ROOT%\run.bat" del /q "%PROJECT_ROOT%\run.bat" >nul 2>nul && 
 if exist "%PROJECT_ROOT%\OpenNotebook.ps1" del /q "%PROJECT_ROOT%\OpenNotebook.ps1" >nul 2>nul && echo   OpenNotebook.ps1 removed
 if exist "%PROJECT_ROOT%\OpenNotebook.bat" del /q "%PROJECT_ROOT%\OpenNotebook.bat" >nul 2>nul && echo   OpenNotebook.bat removed
 if exist "%PROJECT_ROOT%\install-shortcuts.bat" del /q "%PROJECT_ROOT%\install-shortcuts.bat" >nul 2>nul && echo   install-shortcuts.bat removed
+if exist "%PROJECT_ROOT%\install-service.bat" del /q "%PROJECT_ROOT%\install-service.bat" >nul 2>nul && echo   install-service.bat removed
+if exist "%PROJECT_ROOT%\uninstall-service.bat" del /q "%PROJECT_ROOT%\uninstall-service.bat" >nul 2>nul && echo   uninstall-service.bat removed
+if exist "%PROJECT_ROOT%\open-notebook-service.py" del /q "%PROJECT_ROOT%\open-notebook-service.py" >nul 2>nul && echo   open-notebook-service.py removed
+if exist "%PROJECT_ROOT%\desktop" rmdir /s /q "%PROJECT_ROOT%\desktop" >nul 2>nul && echo   desktop folder removed
 if exist "%PROJECT_ROOT%\logs" rmdir /s /q "%PROJECT_ROOT%\logs" >nul 2>nul && echo   logs removed
 
 rem ---- Desktop shortcuts ----
 if exist "%USERPROFILE%\Desktop\Open Notebook.lnk" del /q "%USERPROFILE%\Desktop\Open Notebook.lnk" >nul 2>nul && echo   Desktop shortcut removed
 if exist "%USERPROFILE%\Desktop\Open Notebook - Stop.lnk" del /q "%USERPROFILE%\Desktop\Open Notebook - Stop.lnk" >nul 2>nul && echo   Stop shortcut removed
-if exist "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Open Notebook.lnk" del /q "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Open Notebook.lnk" >nul 2>nul && echo   Start Menu shortcut removed
+if exist "%USERPROFILE%\Desktop\Open Notebook - Start.lnk" del /q "%USERPROFILE%\Desktop\Open Notebook - Start.lnk" >nul 2>nul && echo   Start shortcut removed
+if exist "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Open Notebook" rmdir /s /q "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Open Notebook" >nul 2>nul && echo   Start Menu shortcuts removed
 
 echo [+] Temporary files cleaned
 
