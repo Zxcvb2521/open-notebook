@@ -33,7 +33,7 @@ build/
 *.swp
 
 # Desktop app (unfinished)
-desktop/
+/desktop/
 
 # Other scripts
 start.ps1
