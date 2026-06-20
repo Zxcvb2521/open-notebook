@@ -32,7 +32,7 @@ exit /b 1
 
 :: ============ 2. FastAPI ============
 echo [2/4] FastAPI...
-powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title FastAPI && cd /d %PROJECT_ROOT% && uv run --env-file .env uvicorn api.main:app --host 127.0.0.1 --port 5055'"
+powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title FastAPI && cd /d \"%PROJECT_ROOT%\" && uv run --env-file .env uvicorn api.main:app --host 127.0.0.1 --port 5055'"
 
 :: Wait for FastAPI (up to 40 sec)
 echo   Wait for FastAPI...
@@ -47,11 +47,11 @@ exit /b 1
 
 :: ============ 3. Worker ============
 echo [3/4] Worker...
-powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title Worker && cd /d %PROJECT_ROOT% && uv run --env-file .env surreal-commands-worker --import-modules commands'"
+powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title Worker && cd /d \"%PROJECT_ROOT%\" && uv run --env-file .env surreal-commands-worker --import-modules commands'"
 
 :: ============ 4. Frontend ============
 echo [4/4] Frontend...
-powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title Frontend && cd /d %PROJECT_ROOT%\frontend && npm run dev'"
+powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title Frontend && cd /d \"%PROJECT_ROOT%\frontend\" && npm run dev'"
 
 :: Wait for Frontend (up to 20 sec)
 ping -n 3 127.0.0.1 >nul
