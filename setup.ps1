@@ -82,8 +82,24 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host "  [+] Python зависимости: OK" -ForegroundColor Green
 
-# 3. npm install
-Write-Host "[3/6] Установка Frontend-зависимостей..." -ForegroundColor Yellow
+# 3. .env config
+Write-Host "[3/7] Настройка .env..." -ForegroundColor Yellow
+$envFile = Join-Path $ProjectRoot ".env"
+if (-not (Test-Path $envFile)) {
+    $envExample = Join-Path $ProjectRoot ".env.example"
+    if (Test-Path $envExample) {
+        Copy-Item $envExample $envFile -Force
+        # Generate encryption key
+        $key = -join ((48..57) + (65..90) + (97..122) | Get-Random -Count 32 | ForEach-Object {[char]$_})
+        (Get-Content $envFile) -replace 'change-me-to-a-secret-string', $key | Set-Content $envFile
+        # Fix SurrealDB host
+        (Get-Content $envFile) -replace 'ws://surrealdb:8000/rpc', 'ws://localhost:8000/rpc' | Set-Content $envFile
+        Write-Host "  [+] .env создан" -ForegroundColor Green
+    }
+}
+
+# 4. npm install
+Write-Host "[4/7] Установка Frontend-зависимостей..." -ForegroundColor Yellow
 Set-Location (Join-Path $ProjectRoot "frontend")
 npm install --silent
 if ($LASTEXITCODE -ne 0) {
