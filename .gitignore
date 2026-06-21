@@ -26,14 +26,26 @@ logs/
 build/
 *.spec
 *.exe
+*.iss
 
 # IDE
 .idea/
 .vscode/
 *.swp
 
-# Desktop app (unfinished)
-/desktop/
+# Test files
+test_*
+gather.ps1
+*.hex
 
-# Other scripts
+# Old launchers (not needed)
+OpenNotebook.bat
+OpenNotebook.ps1
 start.ps1
+OpenNotebook_debug.exe
+
+# Desktop app (unfinished)
+desktop/
+
+# Inno Setup
+dl_inno.ps1
