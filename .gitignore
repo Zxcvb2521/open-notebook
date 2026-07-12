@@ -49,3 +49,16 @@ desktop/
 
 # Inno Setup
 dl_inno.ps1
+
+*.local.yml
+**/*.local.md
+.harness/
+
+.mcp.json
+
+# Local Docker Compose override
+docker-compose.override.yml
+
+# Local QA/debug artifacts
+screenshot-*.png
+history.txt
