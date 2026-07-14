@@ -26,7 +26,6 @@ logs/
 build/
 *.spec
 *.exe
-*.iss
 
 # IDE
 .idea/
