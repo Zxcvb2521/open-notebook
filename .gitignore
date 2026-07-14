@@ -26,6 +26,7 @@ logs/
 build/
 *.spec
 *.exe
+dist/
 
 # IDE
 .idea/
@@ -43,8 +44,9 @@ OpenNotebook.ps1
 start.ps1
 OpenNotebook_debug.exe
 
-# Desktop app (unfinished)
-desktop/
+# Desktop app
+desktop/__pycache__/
+desktop/*.pyc
 
 # Inno Setup
 dl_inno.ps1
