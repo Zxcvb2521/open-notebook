@@ -71,6 +71,8 @@ async def content_process(state: SourceState) -> dict:
             config_kwargs["document_engine"] = (
                 settings.default_content_processing_engine_doc
             )
+        if settings.docling_ocr is not None:
+            config_kwargs["docling_ocr"] = settings.docling_ocr
     except Exception as e:
         # Keep the server-side traceback for diagnosing DB/deserialization
         # failures while still falling back to defaults (non-fatal).
@@ -94,6 +96,22 @@ async def content_process(state: SourceState) -> dict:
         # Continue without custom audio model (content-core will use its default)
 
     config = ContentCoreConfig(**config_kwargs) if config_kwargs else None
+
+    # Log the effective extraction engines so operators can confirm which engine
+    # actually ran (content-core logs its own dispatch only at DEBUG). Absent
+    # overrides fall back to content-core's "auto".
+    if content_state.get("url"):
+        target = "url"
+    elif content_state.get("file_path"):
+        target = "document"
+    else:
+        target = "content"
+    logger.info(
+        f"Extracting {target} via content-core "
+        f"(url_engine={config_kwargs.get('url_engine', 'auto')}, "
+        f"document_engine={config_kwargs.get('document_engine', 'auto')}, "
+        f"docling_ocr={config_kwargs.get('docling_ocr', 'auto')})"
+    )
 
     processed = await extract_content(
         url=content_state.get("url"),
