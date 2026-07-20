@@ -125,12 +125,25 @@ def start_surreal():
         try: os.remove(lock)
         except: pass
     
+    # Check if SurrealDB is already running on port 8000
+    try:
+        urllib.request.urlopen("http://localhost:8000/", timeout=2)
+        log("  [+] SurrealDB already running, skipping start")
+        return True
+    except:
+        pass
+    
     cmd = [SURREAL, "start", "--log", "info", "--user", "root", "--pass", "root",
            f"rocksdb:{ROOT}\\surreal_data\\mydatabase.db"]
     log(f"  CMD: {' '.join(cmd)}")
     p = subprocess.Popen(cmd, creationflags=NO_WINDOW, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     PROCS.append(p)
     log("  Waiting for SurrealDB...")
+    # Give it a moment to crash if port is locked
+    time.sleep(2)
+    if p.poll() is not None:
+        log(f"  [!] SurrealDB exited immediately with code {p.returncode}")
+        return False
     if wait_port(8000):
         log("  [+] SurrealDB ready")
         return True
@@ -138,11 +151,22 @@ def start_surreal():
     return False
 
 def start_fastapi():
+    # Check if FastAPI already running
+    try:
+        urllib.request.urlopen("http://localhost:5055/", timeout=2)
+        log("  [+] FastAPI already running, skipping start")
+        return True
+    except:
+        pass
     cmd = [UV, "run", "--env-file", ".env", "uvicorn", "api.main:app", "--host", "127.0.0.1", "--port", "5055"]
     log(f"  CMD: {' '.join(cmd)}")
     p = subprocess.Popen(cmd, cwd=ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     PROCS.append(p)
     log("  Waiting for FastAPI...")
+    time.sleep(2)
+    if p.poll() is not None:
+        log(f"  [!] FastAPI exited immediately with code {p.returncode}")
+        return False
     if wait_port(5055):
         log("  [+] FastAPI ready")
         return True
@@ -158,11 +182,22 @@ def start_worker():
     return True
 
 def start_frontend():
+    # Check if Frontend already running
+    try:
+        urllib.request.urlopen("http://localhost:3000/", timeout=2)
+        log("  [+] Frontend already running, skipping start")
+        return True
+    except:
+        pass
     cmd = [NPM, "run", "dev"]
     log(f"  CMD: {' '.join(cmd)}")
     p = subprocess.Popen(cmd, cwd=os.path.join(ROOT, "frontend"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     PROCS.append(p)
     log("  Waiting for Frontend...")
+    time.sleep(3)
+    if p.poll() is not None:
+        log(f"  [!] Frontend exited immediately with code {p.returncode}")
+        return False
     if wait_port(3000, 30):
         log("  [+] Frontend ready")
         return True
