@@ -2,7 +2,7 @@
 
 **AI-ассистент для исследований с собственной базой знаний**
 
-> Windows-порт (ветка `win`) оригинального проекта [lfnovo/open-notebook](https://github.com/lfnovo/open-notebook)
+> Windows-порт (ветка `win`) оригинального проекта [lfnovo/open-notebook](https://github.com/lfnovo/open-notebook) — автор: [Luis Novo](https://github.com/lfnovo)
 
 ## ⚠️ Важно
 
@@ -89,7 +89,7 @@ Open Notebook состоит из 4 компонентов, запускаемы
 - **🤖 AI Installation Assistant**: [CustomGPT to help you install](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-open-notebook-installation-assistant)
 - **🆘 Troubleshooting**: [5-minute troubleshooting guide](docs/6-TROUBLESHOOTING/quick-fixes.md)
 - **💬 Community Support**: [Discord Server](https://discord.gg/37XJPXfz2w)
-- **🐛 Report Issues**: [GitHub Issues](https://github.com/lfnovo/open-notebook/issues)
+- **🐛 Report Issues**: [GitHub Issues](https://github.com/Zxcvb2521/open-notebook/issues)
 
 ---
 
@@ -137,7 +137,7 @@ Thanks to the [Esperanto](https://github.com/lfnovo/esperanto) library, we suppo
 ## 🤝 Community
 
 - 💬 **[Discord Server](https://discord.gg/37XJPXfz2w)**
-- 🐛 **[GitHub Issues](https://github.com/lfnovo/open-notebook/issues)**
+- 🐛 **[GitHub Issues](https://github.com/Zxcvb2521/open-notebook/issues)**
 
 ## 📄 License
 
