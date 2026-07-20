@@ -127,11 +127,12 @@ $status.Text = "Starting worker..."
 [System.Windows.Forms.Application]::DoEvents()
 Start-Process -WindowStyle Hidden -FilePath "cmd.exe" -ArgumentList "/c cd /d `"$batDir`" && uv run --env-file .env surreal-commands-worker --import-modules commands"
 
-# 4. Frontend
+# 4. Frontend (standalone production mode)
 $status.Text = "Starting frontend..."
 [System.Windows.Forms.Application]::DoEvents()
 $frontendDir = Join-Path $ProjectRoot "frontend"
-Start-Process -WindowStyle Hidden -FilePath "cmd.exe" -ArgumentList "/c cd /d `"$frontendDir`" && npm run dev"
+$frontendLog = Join-Path $ProjectRoot "logs\frontend.log"
+Start-Process -WindowStyle Hidden -FilePath "cmd.exe" -ArgumentList "/c cd /d `"$frontendDir`" && set PORT=3000 && node start-server.js > `"$frontendLog`" 2>&1"
 for ($i = 0; $i -lt 20; $i++) {
     Start-Sleep -Seconds 1
     try {

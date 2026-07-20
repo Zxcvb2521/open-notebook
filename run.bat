@@ -102,14 +102,23 @@ exit /b 1
 echo [3/4] Worker...
 powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title Worker && cd /d \"%PROJECT_ROOT%\" && uv run --env-file .env surreal-commands-worker --import-modules commands'"
 
-:: ============ 4. Frontend ============
-echo [4/4] Frontend...
-powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title Frontend && cd /d \"%PROJECT_ROOT%\frontend\" && npm run dev'"
+:: ============ 4. Frontend (standalone production mode) ============
+echo [4/4] Frontend (production)...
+set "FRONTEND_PORT=3000"
+set "FRONTEND_URL=http://localhost:%FRONTEND_PORT%"
+set "FRONTEND_DIR=%PROJECT_ROOT%\frontend"
+set "FRONTEND_LOG=%PROJECT_ROOT%\logs\frontend.log"
+
+:: Check if frontend is already running
+powershell -Command "try{$s=(Invoke-WebRequest '%FRONTEND_URL%' -TimeoutSec 2 -UseBasicParsing -ErrorAction SilentlyContinue).StatusCode;if($s-eq200){exit 0}}catch{};exit 1" 2>nul && echo   [+] Frontend already running && goto :frontend_ok
+
+:: Start via node start-server.js (standalone mode - fast startup)
+powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title Frontend && cd /d \"%FRONTEND_DIR%\" && set PORT=%FRONTEND_PORT% && node start-server.js > \"%FRONTEND_LOG%\" 2>&1'"
 
 :: Wait for Frontend (up to 20 sec)
 ping -n 3 127.0.0.1 >nul
 for /l %%i in (1,1,20) do (
-    powershell -Command "try{$s=(Invoke-WebRequest 'http://localhost:3000' -TimeoutSec 2 -UseBasicParsing -ErrorAction SilentlyContinue).StatusCode;if($s-eq200){exit 0}}catch{};exit 1" && echo   [+] Frontend ready && goto :frontend_ok
+    powershell -Command "try{$s=(Invoke-WebRequest '%FRONTEND_URL%' -TimeoutSec 2 -UseBasicParsing -ErrorAction SilentlyContinue).StatusCode;if($s-eq200){exit 0}}catch{};exit 1" && echo   [+] Frontend ready && goto :frontend_ok
     ping -n 2 127.0.0.1 >nul
 )
 :frontend_ok
@@ -253,12 +262,15 @@ exit /b 1
 echo [3/4] Worker...
 powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title Worker && cd /d \"%PROJECT_ROOT%\" && uv run --env-file .env surreal-commands-worker --import-modules commands'"
 
-:: Start Frontend
-echo [4/4] Frontend...
-powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title Frontend && cd /d \"%PROJECT_ROOT%\frontend\" && npm run dev'"
+:: Start Frontend (standalone production mode)
+echo [4/4] Frontend (production)...
+set "FRONTEND_PORT=3000"
+set "FRONTEND_DIR=%PROJECT_ROOT%\frontend"
+set "FRONTEND_LOG=%PROJECT_ROOT%\logs\frontend.log"
+powershell -NoProfile -Command "Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c title Frontend && cd /d \"%FRONTEND_DIR%\" && set PORT=%FRONTEND_PORT% && node start-server.js > \"%FRONTEND_LOG%\" 2>&1'"
 ping -n 3 127.0.0.1 >nul
 for /l %%i in (1,1,20) do (
-    powershell -Command "try{$s=(Invoke-WebRequest 'http://localhost:3000' -TimeoutSec 2 -UseBasicParsing -ErrorAction SilentlyContinue).StatusCode;if($s-eq200){exit 0}}catch{};exit 1" && echo   [+] Frontend ready && goto :silent_frontend_ok
+    powershell -Command "try{$s=(Invoke-WebRequest 'http://localhost:%FRONTEND_PORT%' -TimeoutSec 2 -UseBasicParsing -ErrorAction SilentlyContinue).StatusCode;if($s-eq200){exit 0}}catch{};exit 1" && echo   [+] Frontend ready && goto :silent_frontend_ok
     ping -n 2 127.0.0.1 >nul
 )
 :silent_frontend_ok
