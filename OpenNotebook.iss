@@ -46,7 +46,7 @@ Source: "frontend\node_modules\*"; DestDir: "{app}\frontend\node_modules"; Flags
 Source: "open_notebook\*"; DestDir: "{app}\open_notebook"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "api\*"; DestDir: "{app}\api"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "commands\*"; DestDir: "{app}\commands"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "surreal_data\*"; DestDir: "{app}\surreal_data"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "prompts\*"; DestDir: "{app}\prompts"; Flags: ignoreversion recursesubdirs createallsubdirs skipifsourcedoesntexist
 
 [Dirs]
 Name: "{app}\logs"; Flags: uninsalwaysuninstall
