@@ -2,7 +2,7 @@
 ; Inno Setup 6 Script
 
 #define MyAppName "Open Notebook"
-#define MyAppVersion "1.12.0"
+#define MyAppVersion "1.13.0"
 #define MyAppExeName "OpenNotebook.exe"
 
 [Setup]
@@ -32,6 +32,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "dist\OpenNotebook.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "run.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "run-silent.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "run-silent.vbs"; DestDir: "{app}"; Flags: ignoreversion
+Source: "launch.ps1"; DestDir: "{app}"; Flags: ignoreversion
+Source: "stop-watcher.ps1"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".env.example"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".env"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 
@@ -53,8 +57,9 @@ Name: "{app}\logs"; Flags: uninsalwaysuninstall
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{#MyAppName} (Console)"; Filename: "{app}\run.bat"; WorkingDir: "{app}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\run-silent.vbs"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
