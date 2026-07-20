@@ -209,8 +209,13 @@ def cleanup(*args):
     for p in PROCS:
         try: p.kill()
         except: pass
-    for name in ["surreal.exe", "uvicorn.exe", "surreal-commands-worker.exe"]:
+    # Also kill by name in case Popen didn't track them
+    for name in ["uvicorn.exe", "surreal-commands-worker.exe"]:
         subprocess.run(["taskkill", "/f", "/im", name], capture_output=True)
+    # Kill only OUR surreal (port 8000 check)
+    try:
+        subprocess.run(["taskkill", "/f", "/im", "surreal.exe"], captureoutput=True)
+    except: pass
     log("Done.")
 
 def main():
@@ -268,8 +273,25 @@ def main():
         
         log("  Close the app window to stop all services.")
         
-        while edge.poll() is None:
-            time.sleep(1)
+        # Wait for Edge app window to close
+        # Edge is multiprocess: poll() may return immediately for the initial process
+        # Instead, check if the main Edge PID is still alive periodically
+        edge_pid = edge.pid
+        time.sleep(2)  # Give Edge time to initialize
+        while True:
+            # Check if our Edge process is still running
+            try:
+                os.kill(edge_pid, 0)  # Check if process exists
+            except OSError:
+                break  # Process gone
+            # Also check if any Edge with our --user-data-dir is still running
+            result = subprocess.run(
+                ["tasklist", "/fi", "imagename eq msedge.exe", "/fo", "csv"],
+                capture_output=True, text=True
+            )
+            if "msedge.exe" not in result.stdout:
+                break  # No Edge processes at all
+            time.sleep(2)
     except Exception as e:
         log(f"ERROR: {e}")
         log(traceback.format_exc())
