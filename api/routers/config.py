@@ -1,4 +1,5 @@
 import asyncio
+import secrets
 import time
 import tomllib
 from pathlib import Path
@@ -8,6 +9,7 @@ from fastapi import APIRouter, Request
 from loguru import logger
 
 from open_notebook.database.repository import repo_query
+from open_notebook.utils.encryption import get_secret_from_env
 from open_notebook.utils.version_utils import (
     compare_versions,
     get_version_from_github_async,
@@ -157,3 +159,53 @@ async def get_config(request: Request):
         "hasUpdate": has_update,
         "dbStatus": db_status,
     }
+
+
+@router.post("/config/generate-encryption-key")
+async def generate_encryption_key():
+    """
+    Generate a random encryption key, write it to .env, and set it
+    in the current process environment so it takes effect immediately.
+    """
+    # Check if already configured
+    if get_secret_from_env("OPEN_NOTEBOOK_ENCRYPTION_KEY"):
+        return {"status": "already_configured", "message": "Encryption key is already set."}
+
+    # Generate a random 32-char alphanumeric key
+    key = secrets.token_urlsafe(32)
+
+    # Find the .env file relative to project root
+    project_root = Path(__file__).parent.parent.parent
+    env_path = project_root / ".env"
+
+    if env_path.exists():
+        content = env_path.read_text(encoding="utf-8")
+        if "OPEN_NOTEBOOK_ENCRYPTION_KEY=" in content:
+            # Replace existing (even if empty/commented)
+            lines = content.splitlines()
+            new_lines = []
+            replaced = False
+            for line in lines:
+                if line.strip().startswith("OPEN_NOTEBOOK_ENCRYPTION_KEY="):
+                    new_lines.append(f"OPEN_NOTEBOOK_ENCRYPTION_KEY={key}")
+                    replaced = True
+                else:
+                    new_lines.append(line)
+            if not replaced:
+                new_lines.append(f"OPEN_NOTEBOOK_ENCRYPTION_KEY={key}")
+            env_path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
+        else:
+            # Append to .env
+            with open(env_path, "a", encoding="utf-8") as f:
+                f.write(f"\nOPEN_NOTEBOOK_ENCRYPTION_KEY={key}\n")
+    else:
+        # Create .env with just the key
+        env_path.write_text(f"OPEN_NOTEBOOK_ENCRYPTION_KEY={key}\n", encoding="utf-8")
+
+    # Set in current process so it takes effect without restart
+    import os
+    os.environ["OPEN_NOTEBOOK_ENCRYPTION_KEY"] = key
+
+    logger.info("Encryption key generated and written to .env")
+
+    return {"status": "success", "message": "Encryption key generated and activated."}

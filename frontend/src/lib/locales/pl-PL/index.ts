@@ -972,5 +972,9 @@ export const plPL = {
     migrationDescription: "Liczba dostawców z kluczami API ustawionymi przez zmienne środowiskowe: {{count}}. Przenieś je do bazy danych w celu łatwiejszego zarządzania.",
     goToSettings: "Przejdź do Ustawień",
     viewDocs: "Zobacz dokumentację",
+    encryptionReady: "Klucz szyfrowania skonfigurowany",
+    encryptionReadyDescription: "Szyfrowanie kluczy API jest aktywne. Możesz bezpiecznie przechowywać klucze API.",
+    generating: "Generowanie...",
+    generateKey: "Wygeneruj klucz szyfrowania",
   },
 } satisfies TranslationShape;

@@ -969,6 +969,10 @@ export const bnIN = {
   setupBanner: {
     encryptionRequired: "এনক্রিপশন কী কনফিগার করা হয়নি",
     encryptionRequiredDescription: "নিরাপদ credential স্টোরেজ সক্ষম করতে OPEN_NOTEBOOK_ENCRYPTION_KEY environment variable সেট করুন।",
+    encryptionReady: "এনক্রিপশন কী কনফিগার করা হয়েছে",
+    encryptionReadyDescription: "API কী এনক্রিপশন সক্রিয়। আপনি নিরাপদে API কী সংরক্ষণ করতে পারেন।",
+    generating: "তৈরি হচ্ছে...",
+    generateKey: "এনক্রিপশন কী তৈরি করুন",
     migrationAvailable: "API key মাইগ্রেশন উপলব্ধ",
     migrationDescription: "{{count}}টি প্রভাইডারের API key environment variable দিয়ে সেট করা আছে। সহজ ব্যবস্থাপনার জন্য সেগুলি ডেটাবেসে মাইগ্রেট করুন।",
     goToSettings: "সেটিংসে যান",

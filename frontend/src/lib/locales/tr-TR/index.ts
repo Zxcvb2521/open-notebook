@@ -972,5 +972,9 @@ export const trTR = {
     migrationDescription: "{{count}} sağlayıcının API anahtarları ortam değişkenleri aracılığıyla ayarlanmış. Daha kolay yönetim için veritabanına taşıyın.",
     goToSettings: "Ayarlara Git",
     viewDocs: "Belgeleri Görüntüle",
+    encryptionReady: "Şifreleme anahtarı yapılandırıldı",
+    encryptionReadyDescription: "API anahtarı şifrelemesi aktif. API anahtarlarını güvenli bir şekilde saklayabilirsiniz.",
+    generating: "Oluşturuluyor...",
+    generateKey: "Şifreleme anahtarı oluştur",
   },
 } satisfies TranslationShape;

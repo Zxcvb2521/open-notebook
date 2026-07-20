@@ -972,5 +972,9 @@ export const caES = {
     migrationDescription: "{{count}} proveïdor(s) tenen claus de l'API configurades mitjançant variables d'entorn. Migra-les a la base de dades per facilitar-ne la gestió.",
     goToSettings: "Ves a la configuració",
     viewDocs: "Visualitza la documentació",
+    encryptionReady: "Clau de xifratge configurada",
+    encryptionReadyDescription: "El xifratge de claus API està actiu. Pau emmagatzemar claus API de manera segura.",
+    generating: "Generant...",
+    generateKey: "Generar clau de xifratge",
   },
 } satisfies TranslationShape;

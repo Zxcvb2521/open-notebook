@@ -1,17 +1,20 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { ShieldAlert, AlertTriangle, ArrowRight, ExternalLink } from 'lucide-react'
+import { ShieldAlert, AlertTriangle, ArrowRight, ExternalLink, Check, Loader2 } from 'lucide-react'
 import { useTranslation } from '@/lib/hooks/use-translation'
 import { useCredentialStatus, useEnvStatus } from '@/lib/hooks/use-credentials'
+import { credentialsApi } from '@/lib/api/credentials'
 
 export function SetupBanner() {
   const { t } = useTranslation()
-  const { data: credentialStatus } = useCredentialStatus()
+  const { data: credentialStatus, refetch: refetchCredentialStatus } = useCredentialStatus()
   const { data: envStatus } = useEnvStatus()
+  const [generatingKey, setGeneratingKey] = useState(false)
+  const [keyGenerated, setKeyGenerated] = useState(false)
 
   const encryptionReady = credentialStatus?.encryption_configured ?? true
 
@@ -31,6 +34,38 @@ export function SetupBanner() {
   }
 
   if (!encryptionReady) {
+    const handleGenerateKey = async () => {
+      setGeneratingKey(true)
+      try {
+        const result = await credentialsApi.generateEncryptionKey()
+        if (result.status === 'success' || result.status === 'already_configured') {
+          setKeyGenerated(true)
+          // Re-fetch credential status to update the UI
+          await refetchCredentialStatus()
+        }
+      } catch (error) {
+        console.error('Failed to generate encryption key:', error)
+      } finally {
+        setGeneratingKey(false)
+      }
+    }
+
+    if (keyGenerated) {
+      return (
+        <div className="px-4 pt-3">
+          <Alert className="border-green-500/50 bg-green-50 dark:bg-green-950/20">
+            <Check className="h-4 w-4 text-green-600 dark:text-green-400" />
+            <AlertTitle className="text-green-800 dark:text-green-200">
+              {t('setupBanner.encryptionReady') || 'Encryption key configured'}
+            </AlertTitle>
+            <AlertDescription className="text-green-700 dark:text-green-300">
+              {t('setupBanner.encryptionReadyDescription') || 'API key encryption is now active. You can store API keys safely.'}
+            </AlertDescription>
+          </Alert>
+        </div>
+      )
+    }
+
     return (
       <div className="px-4 pt-3">
         <Alert className="border-red-500/50 bg-red-50 dark:bg-red-950/20">
@@ -40,15 +75,25 @@ export function SetupBanner() {
           </AlertTitle>
           <AlertDescription className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-red-700 dark:text-red-300">
             <span>{t('setupBanner.encryptionRequiredDescription')}</span>
-            <a
-              href="https://github.com/Zxcvb2521/open-notebook/blob/win/docs/3-USER-GUIDE/api-configuration.md#encryption-setup"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center shrink-0 text-sm font-medium underline underline-offset-2 hover:text-red-900 dark:hover:text-red-100"
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleGenerateKey}
+              disabled={generatingKey}
+              className="shrink-0 border-red-500 text-red-700 hover:bg-red-100 dark:border-red-400 dark:text-red-300 dark:hover:bg-red-900/30"
             >
-              {t('setupBanner.viewDocs')}
-              <ExternalLink className="ml-1 h-3 w-3" />
-            </a>
+              {generatingKey ? (
+                <>
+                  <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                  {t('setupBanner.generating') || 'Generating...'}
+                </>
+              ) : (
+                <>
+                  <ShieldAlert className="mr-2 h-3 w-3" />
+                  {t('setupBanner.generateKey') || 'Generate encryption key'}
+                </>
+              )}
+            </Button>
           </AlertDescription>
         </Alert>
       </div>

@@ -242,4 +242,14 @@ export const credentialsApi = {
     const response = await apiClient.post<MigrationResult>('/credentials/migrate-from-env')
     return response.data
   },
+
+  /**
+   * Generate encryption key and write to .env
+   */
+  generateEncryptionKey: async (): Promise<{ status: string; message: string }> => {
+    const response = await apiClient.post<{ status: string; message: string }>(
+      '/config/generate-encryption-key'
+    )
+    return response.data
+  },
 }

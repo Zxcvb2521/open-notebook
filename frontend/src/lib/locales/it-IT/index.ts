@@ -972,5 +972,9 @@ export const itIT = {
     migrationDescription: "{{count}} provider hanno chiavi API impostate tramite variabili d'ambiente. Migrale nel database per una gestione più semplice.",
     goToSettings: "Vai alle Impostazioni",
     viewDocs: "Vedi documentazione",
+    encryptionReady: "Chiave di crittografia configurata",
+    encryptionReadyDescription: "La crittografia delle chiavi API è attiva. Puoi archiviare le chiavi API in modo sicuro.",
+    generating: "Generazione...",
+    generateKey: "Genera chiave di crittografia",
   },
 } satisfies TranslationShape;

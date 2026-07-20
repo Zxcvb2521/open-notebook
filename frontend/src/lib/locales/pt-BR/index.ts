@@ -972,5 +972,9 @@ export const ptBR = {
     migrationDescription: "{{count}} provedor(es) possuem chaves de API definidas por variáveis de ambiente. Migre-as para o banco de dados para facilitar o gerenciamento.",
     goToSettings: "Ir para Configurações",
     viewDocs: "Ver documentação",
+    encryptionReady: "Chave de criptografia configurada",
+    encryptionReadyDescription: "A criptografia de chaves de API está ativa. Você pode armazenar chaves de API com segurança.",
+    generating: "Gerando...",
+    generateKey: "Gerar chave de criptografia",
   },
 } satisfies TranslationShape;

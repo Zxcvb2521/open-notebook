@@ -244,6 +244,7 @@ app.add_middleware(
         "/redoc",
         "/api/auth/status",
         "/api/config",
+        "/api/config/generate-encryption-key",
     ],
 )
 

@@ -967,7 +967,11 @@ export const ruRU = {
   },
   setupBanner: {
     encryptionRequired: "Ключ шифрования не настроен",
-    encryptionRequiredDescription: "Установите переменную окружения OPEN_NOTEBOOK_ENCRYPTION_KEY для безопасного хранения учётных данных.",
+    encryptionRequiredDescription: "Нажмите кнопку ниже, чтобы сгенерировать ключ. Он будет сохранён автоматически.",
+    encryptionReady: "Ключ шифрования настроен",
+    encryptionReadyDescription: "Шифрование API-ключей активно. Можно безопасно сохранять ключи.",
+    generating: "Генерация...",
+    generateKey: "Сгенерировать ключ",
     migrationAvailable: "Доступна миграция API-ключей",
     migrationDescription: "{{count}} провайдер(ов) имеют API-ключи, заданные через переменные окружения. Перенесите их в базу данных для удобного управления.",
     goToSettings: "Перейти к настройкам",

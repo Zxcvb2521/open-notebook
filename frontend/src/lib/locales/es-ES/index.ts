@@ -973,5 +973,9 @@ export const esES = {
     migrationDescription: "{{count}} proveedor(es) tienen claves API configuradas vía variables de entorno. Mígralas a la base de datos para una gestión más fácil.",
     goToSettings: "Ir a configuración",
     viewDocs: "Ver documentación",
+    encryptionReady: "Clave de cifrado configurada",
+    encryptionReadyDescription: "El cifrado de claves API está activo. Puede almacenar claves API de forma segura.",
+    generating: "Generando...",
+    generateKey: "Generar clave de cifrado",
   },
 } satisfies TranslationShape;

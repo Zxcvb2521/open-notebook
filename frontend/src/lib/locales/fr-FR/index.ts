@@ -972,5 +972,9 @@ export const frFR = {
     migrationDescription: "{{count}} fournisseur(s) ont des clés API définies via des variables d'environnement. Migrez-les vers la base de données pour une gestion plus facile.",
     goToSettings: "Aller aux paramètres",
     viewDocs: "Voir la documentation",
+    encryptionReady: "Clé de chiffrement configurée",
+    encryptionReadyDescription: "Le chiffrement des clés API est actif. Vous pouvez stocker des clés API en toute sécurité.",
+    generating: "Génération...",
+    generateKey: "Générer une clé de chiffrement",
   },
 } satisfies TranslationShape;

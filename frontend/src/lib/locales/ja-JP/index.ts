@@ -972,5 +972,9 @@ export const jaJP = {
     migrationDescription: "{{count}} 個のプロバイダーのAPIキーが環境変数で設定されています。管理を容易にするためにデータベースに移行してください。",
     goToSettings: "設定へ移動",
     viewDocs: "ドキュメントを見る",
+    encryptionReady: "暗号化キーが設定済み",
+    encryptionReadyDescription: "APIキーの暗号化が有効です。APIキーを安全に保存できます。",
+    generating: "生成中...",
+    generateKey: "暗号化キーを生成",
   },
 } satisfies TranslationShape;

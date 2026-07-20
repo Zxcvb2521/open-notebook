@@ -972,5 +972,9 @@ export const zhCN = {
     migrationDescription: "{{count}} 个服务商的 API 密钥通过环境变量设置。将它们迁移到数据库以便于管理。",
     goToSettings: "前往设置",
     viewDocs: "查看文档",
+    encryptionReady: "加密密钥已配置",
+    encryptionReadyDescription: "API 密钥加密已激活。您可以安全地存储 API 密钥。",
+    generating: "生成中...",
+    generateKey: "生成加密密钥",
   },
 } satisfies TranslationShape;

@@ -975,5 +975,9 @@ export const deDE = {
     migrationDescription: "{{count}} Anbieter haben API-Keys über Umgebungsvariablen gesetzt. Migriere sie zur einfacheren Verwaltung in die Datenbank.",
     goToSettings: "Zu den Einstellungen",
     viewDocs: "Dokumentation anzeigen",
+    encryptionReady: "Verschlüsselungsschlüssel konfiguriert",
+    encryptionReadyDescription: "API-Schlüssel-Verschlüsselung ist aktiv. Sie können API-Schlüssel sicher speichern.",
+    generating: "Wird generiert...",
+    generateKey: "Verschlüsselungsschlüssel generieren",
   },
 } satisfies TranslationShape;

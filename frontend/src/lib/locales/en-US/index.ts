@@ -966,7 +966,11 @@ export const enUS = {
   },
   setupBanner: {
     encryptionRequired: "Encryption key not configured",
-    encryptionRequiredDescription: "Set the OPEN_NOTEBOOK_ENCRYPTION_KEY environment variable to enable secure credential storage.",
+    encryptionRequiredDescription: "Click the button below to generate a key. It will be saved automatically.",
+    encryptionReady: "Encryption key configured",
+    encryptionReadyDescription: "API key encryption is active. You can store API keys safely.",
+    generating: "Generating...",
+    generateKey: "Generate encryption key",
     migrationAvailable: "API key migration available",
     migrationDescription: "{{count}} provider(s) have API keys set via environment variables. Migrate them to the database for easier management.",
     goToSettings: "Go to Settings",

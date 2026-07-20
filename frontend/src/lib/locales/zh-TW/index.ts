@@ -972,5 +972,9 @@ export const zhTW = {
     migrationDescription: "{{count}} 個供應商的 API 金鑰透過環境變數設定。將它們遷移到資料庫以便於管理。",
     goToSettings: "前往設定",
     viewDocs: "查看文件",
+    encryptionReady: "加密金鑰已設定",
+    encryptionReadyDescription: "API 金鑰加密已啟用。您可以安全地儲存 API 金鑰。",
+    generating: "產生中...",
+    generateKey: "產生加密金鑰",
   },
 } satisfies TranslationShape;
