@@ -50,13 +50,17 @@ def find_in_registry(name):
 
 def find_exe(name, extra_dirs=None):
     """Find an executable by name using PATH, registry, and common locations."""
-    # Registry lookup (most reliable)
+    # extra_dirs first (project-specific paths take priority)
+    if extra_dirs:
+        for d in extra_dirs:
+            candidate = os.path.join(d, name)
+            if os.path.isfile(candidate):
+                return candidate
+    # Registry lookup
     found = find_in_registry(name)
     if found:
         return found
     dirs = []
-    if extra_dirs:
-        dirs.extend(extra_dirs)
     for base in [os.environ.get("LOCALAPPDATA", ""), os.environ.get("PROGRAMFILES", ""),
                  os.environ.get("PROGRAMFILES(X86)", ""), os.environ.get("HOME", "")]:
         if base:
@@ -89,6 +93,8 @@ SURREAL = find_exe("surreal.exe", [
     os.path.expanduser("~\\AppData\\Local\\SurrealDB"),
 ]) or "surreal"
 NPM = find_exe("npm.cmd", [
+    r"C:\Program Files\nodejs",
+]) or find_exe("npm", [
     r"C:\Program Files\nodejs",
 ]) or "npm.cmd"
 EDGE = find_exe("msedge.exe") or find_exe("chrome.exe") or ""
@@ -187,6 +193,7 @@ def main():
     log(f"  ROOT: {ROOT}")
     log(f"  UV: {UV}")
     log(f"  SURREAL: {SURREAL}")
+    log(f"  NPM: {NPM}")
     log(f"  EDGE: {EDGE}")
     log(f"  File exists: uv={os.path.exists(UV)}, surreal={os.path.exists(SURREAL)}, edge={os.path.exists(EDGE)}")
     log("")
