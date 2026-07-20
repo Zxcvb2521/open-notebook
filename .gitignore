@@ -27,35 +27,50 @@ build/
 *.spec
 *.exe
 dist/
-
-# IDE
-.idea/
-.vscode/
-*.swp
-
-# Test files
-test_*
-gather.ps1
-*.hex
-
-# Old launchers (not needed)
-OpenNotebook.bat
-OpenNotebook.ps1
-start.ps1
-OpenNotebook_debug.exe
-
-# Desktop app
-desktop/__pycache__/
-desktop/*.pyc
+installer/
 
 # Inno Setup
 dl_inno.ps1
 
-*.local.yml
-**/*.local.md
-.harness/
-
+# Upstream files (not needed for Windows port)
+AGENTS.md
+CLAUDE.md
+VISION.md
+CONFIGURATION.md
+SECURITY.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+MAINTAINER_GUIDE.md
+README.dev.md
+Makefile
+.dockerignore
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml.example
+supervisord.conf
+supervisord.surrealdb.conf
+cubic.yaml
+.dev-init.sh
+.pre-commit-config.yaml
+.python-version
+.gitattributes
+.worktreeinclude
 .mcp.json
+
+# Upstream folders
+.agents/
+.codex/
+.harness/
+.github/
+docs/
+tests/
+scripts/
+examples/
+
+# Temp files
+tmp/
+create-release.ps1
+RELEASE-*.md
 
 # Local Docker Compose override
 docker-compose.override.yml
@@ -63,3 +78,6 @@ docker-compose.override.yml
 # Local QA/debug artifacts
 screenshot-*.png
 history.txt
+
+*.local.yml
+**/*.local.md
