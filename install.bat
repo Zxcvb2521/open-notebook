@@ -9,7 +9,7 @@ echo ============================================
 echo.
 
 rem ============= 1. SurrealDB =============
-echo --- 1/4. SurrealDB ---
+echo --- 1/5. SurrealDB ---
 
 where surreal >nul 2>nul
 if errorlevel 1 (
@@ -24,7 +24,7 @@ if errorlevel 1 (
 
 rem ============= 2. uv + Python =============
 echo.
-echo --- 2/4. Python and uv ---
+echo --- 2/5. Python and uv ---
 
 where uv >nul 2>nul
 if errorlevel 1 (
@@ -46,7 +46,7 @@ if errorlevel 1 (
 
 rem ============= 3. Python dependencies =============
 echo.
-echo --- 3/4. Python dependencies (uv sync) ---
+echo --- 3/5. Python dependencies (uv sync) ---
 
 if exist ".venv" (
     echo [*] .venv exists, updating...
@@ -62,9 +62,9 @@ if errorlevel 1 (
 )
 echo [+] Python dependencies installed
 
-rem ============= 4. Frontend dependencies =============
+rem ============= 4. Frontend build =============
 echo.
-echo --- 4/4. Frontend dependencies (npm install) ---
+echo --- 4/5. Frontend build ---
 
 cd /d "%~dp0frontend"
 call npm install
@@ -74,6 +74,23 @@ if errorlevel 1 (
     exit /b 1
 )
 echo [+] Frontend dependencies installed
+
+echo.
+echo [*] Building frontend (next build + copy static)...
+call npx next build
+if errorlevel 1 (
+    echo [!] next build failed
+    pause
+    exit /b 1
+)
+
+:: Copy static assets to standalone directory
+robocopy ".next\static" ".next\standalone\.next\static" /E /NFL /NDL /NJH /NJS >nul
+
+if exist "public" (
+    robocopy "public" ".next\standalone\public" /E /NFL /NDL /NJH /NJS >nul
+)
+echo [+] Frontend built and static assets copied
 
 rem ============= 5. .env config =============
 echo.

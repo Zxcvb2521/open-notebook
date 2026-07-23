@@ -67,7 +67,7 @@ class OpenNotebookService(win32serviceutil.ServiceFramework):
         self.running = True
         self.main()
 
-    def start_process(self, name, cmd, cwd=None, title=None):
+    def start_process(self, name, cmd, cwd=None, title=None, env_extra=None):
         """Start a process and track it."""
         try:
             startupinfo = subprocess.STARTUPINFO()
@@ -76,6 +76,8 @@ class OpenNotebookService(win32serviceutil.ServiceFramework):
 
             env = os.environ.copy()
             env["PYTHONUNBUFFERED"] = "1"
+            if env_extra:
+                env.update(env_extra)
 
             log_path = os.path.join(LOG_DIR, f"{name}.log")
             os.makedirs(LOG_DIR, exist_ok=True)
@@ -167,10 +169,10 @@ class OpenNotebookService(win32serviceutil.ServiceFramework):
             )
             self.start_process("Worker", worker_cmd)
 
-            # ── 4. Frontend ─────────────────────────────────────────────
+            # ── 4. Frontend (standalone production mode) ──────────────
             log.info("[4/4] Frontend...")
-            frontend_cmd = "npm run dev"
-            self.start_process("Frontend", frontend_cmd, cwd=FRONTEND_DIR)
+            frontend_cmd = "node start-server.js"
+            self.start_process("Frontend", frontend_cmd, cwd=FRONTEND_DIR, env_extra={"PORT": "3000"})
             self.wait_for_url("http://localhost:3000", timeout=30, label="Frontend")
 
             log.info("=" * 44)
@@ -189,7 +191,7 @@ class OpenNotebookService(win32serviceutil.ServiceFramework):
                         if name in ("Worker", "Frontend"):
                             log.info(f"  [*] Restarting {name}...")
                             if name == "Frontend":
-                                self.start_process(name, frontend_cmd, cwd=FRONTEND_DIR)
+                                self.start_process(name, frontend_cmd, cwd=FRONTEND_DIR, env_extra={"PORT": "3000"})
                             elif name == "Worker":
                                 self.start_process(name, worker_cmd)
                 time.sleep(2)

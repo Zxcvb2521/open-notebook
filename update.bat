@@ -26,11 +26,11 @@ echo Fork changes:
 git log HEAD..fork/win --oneline 2>nul
 echo.
 
-echo [3/4] Merging from original repo...
+echo [3/4] Merging and updating...
 git merge origin/main --no-edit 2>nul || git merge origin/win --no-edit 2>nul
 echo.
 
-echo [4/4] Updating dependencies...
+echo [4/4] Installing dependencies and building...
 call install.bat
 echo.
 
