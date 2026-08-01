@@ -1,0 +1,14 @@
+pub mod notebooks;
+pub mod sources;
+pub mod notes;
+pub mod models;
+pub mod transformations;
+pub mod chat;
+pub mod settings;
+pub mod credentials;
+pub mod search;
+pub mod embedding;
+pub mod commands;
+pub mod podcasts;
+pub mod auth;
+pub mod providers;

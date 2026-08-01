@@ -1,0 +1,24 @@
+# Rust / Tauri
+target/
+src-tauri/target/
+
+# Node / frontend
+node_modules/
+dist/
+frontend/
+
+# Build artifacts & installers
+*.exe
+*.msi
+
+# Logs / temp
+*.log
+err.txt
+fc-out.txt
+tsc-out.txt
+verify-exe.png
+
+# IDE / OS
+.vscode/
+.idea/
+Thumbs.db
