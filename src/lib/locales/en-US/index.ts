@@ -13,6 +13,10 @@ export const enUS = {
     light: "Light",
     dark: "Dark",
     system: "System",
+    skin: {
+      quietGreen: "Quiet Green",
+      classic: "Classic",
+    },
     loading: "Loading...",
     note: "Note",
     insight: "Insight",

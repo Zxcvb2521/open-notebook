@@ -375,6 +375,15 @@
 
   body {
     @apply bg-background text-foreground transition-colors;
+    font-family: var(--font-sans);
+  }
+
+  /* Design font variables — resolved by the next/font shim (font-google.ts);
+     the shim injects <link> and sets these on :root at boot. */
+  :root {
+    --font-instrument-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    --font-spline-mono: "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --font-bricolage: "Bricolage Grotesque", "Avenir Next", "Trebuchet MS", sans-serif;
   }
 
   /* Ensure proper theme inheritance for popovers and dropdowns */
@@ -437,4 +446,124 @@
   .prose blockquote p::after {
     content: none !important;
   }
+}
+
+/* ============================================================================
+   SKIN: classic — the pre-"Quiet Green" shadcn palette (neutral + blue primary).
+   Applied when <html data-skin="classic">. Overrides the shadcn semantic
+   slots so all components using bg-background/bg-card/… re-resolve instantly.
+   ========================================================================== */
+[data-skin="classic"] {
+  --bg: #fafafa;
+  --bg-deep: #f4f4f5;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-recessed: #f4f4f5;
+  --surface-sunken: #f4f4f5;
+
+  --ink: #0a0a0a;
+  --ink-soft: #545454;
+  --ink-faint: #737373;
+  --ink-faintest: #a3a3a3;
+
+  --line: #e4e4e7;
+  --line-soft: #f0f0f1;
+  --line-strong: #0a0a0a;
+
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --on-primary: #eff6ff;
+
+  --danger: #dc2626;
+  --danger-deep: #b91c1c;
+  --danger-tint: #fef2f2;
+
+  --teal: #0e7268;
+  --teal-deep: #095a51;
+
+  --excerpt-wash: #f0f4f8;
+
+  /* shadcn slots — from the pre-reskin globals.css */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: var(--danger);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: var(--primary);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.927 0.002 286.375);
+  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: var(--primary);
+}
+
+[data-skin="classic"].dark {
+  --bg-deep: #18181b;
+  --surface: #101012;
+  --surface-raised: #1c1c1f;
+  --surface-recessed: #1a1a1d;
+  --surface-sunken: #222225;
+
+  --ink: #f4f4f5;
+  --ink-soft: #a1a1aa;
+  --ink-faint: #71717a;
+  --ink-faintest: #52525b;
+
+  --line: #27272a;
+  --line-soft: #1e1e21;
+  --line-strong: #f4f4f5;
+
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --on-primary: #eff6ff;
+
+  --danger: #ef4444;
+  --danger-deep: #dc2626;
+  --danger-tint: #450a0a;
+
+  --excerpt-wash: #1a1a1d;
+
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.21 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.274 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.274 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: var(--danger);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--primary);
+  --sidebar: oklch(0.21 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: var(--primary);
+  --sidebar-accent: oklch(0.35 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: var(--primary);
 }

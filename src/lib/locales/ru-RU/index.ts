@@ -15,6 +15,10 @@ export const ruRU = {
     light: "Светлая",
     dark: "Тёмная",
     system: "Системная",
+    skin: {
+      quietGreen: "Quiet Green",
+      classic: "Классическая",
+    },
     loading: "Загрузка...",
     note: "Заметка",
     insight: "Инсайт",

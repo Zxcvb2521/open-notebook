@@ -6,9 +6,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Sun, Moon, Monitor } from 'lucide-react'
+import { Sun, Moon, Monitor, Leaf, Palette } from 'lucide-react'
 import { useTranslation } from '@/lib/hooks/use-translation'
 
 interface ThemeToggleProps {
@@ -16,7 +17,7 @@ interface ThemeToggleProps {
 }
 
 export function ThemeToggle({ iconOnly = false }: ThemeToggleProps) {
-  const { theme, setTheme } = useTheme()
+  const { theme, skin, setTheme, setSkin } = useTheme()
   const { t } = useTranslation()
 
   return (
@@ -56,6 +57,21 @@ export function ThemeToggle({ iconOnly = false }: ThemeToggleProps) {
         >
           <Monitor className="mr-2 h-4 w-4" />
           <span>{t('common.system')}</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem 
+          onClick={() => setSkin('quiet-green')}
+          className={skin === 'quiet-green' ? 'bg-accent' : ''}
+        >
+          <Leaf className="mr-2 h-4 w-4" />
+          <span>{t('common.skin.quietGreen')}</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => setSkin('classic')}
+          className={skin === 'classic' ? 'bg-accent' : ''}
+        >
+          <Palette className="mr-2 h-4 w-4" />
+          <span>{t('common.skin.classic')}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -8,7 +8,7 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const { theme, getSystemTheme, getEffectiveTheme } = useThemeStore()
+  const { skin, theme, getSystemTheme, getEffectiveTheme } = useThemeStore()
 
   useEffect(() => {
     // Initialize theme on mount
@@ -23,6 +23,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     
     // Set the data attribute as well for better component compatibility
     root.setAttribute('data-theme', effectiveTheme)
+    root.setAttribute('data-skin', skin)
 
     // Listen for system theme changes when using system preference
     if (theme === 'system') {
@@ -38,7 +39,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       mediaQuery.addEventListener('change', handleChange)
       return () => mediaQuery.removeEventListener('change', handleChange)
     }
-  }, [theme, getSystemTheme, getEffectiveTheme])
+  }, [theme, getSystemTheme, getEffectiveTheme, skin])
 
   return <>{children}</>
 }
