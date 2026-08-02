@@ -54,6 +54,14 @@ pub fn run() {
             
             Ok(())
         })
+        .on_window_event(|window, event| {
+            // Guarantee full app exit when the main window is closed.
+            // Without this, the process can keep running hidden in the
+            // background (and keep the Python AI service alive with it).
+            if let tauri::WindowEvent::CloseRequested { .. } = event {
+                window.app_handle().exit(0);
+            }
+        })
         .invoke_handler(tauri::generate_handler![
             // Notebooks
             api::notebooks::list_notebooks,

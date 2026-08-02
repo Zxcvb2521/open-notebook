@@ -187,8 +187,28 @@ impl AiService {
     pub fn stop(&self) -> Result<(), String> {
         let mut guard = self.child.lock().map_err(|e| e.to_string())?;
         if let Some(ref mut child) = *guard {
-            let _ = child.kill();
-            let _ = child.wait();
+            #[cfg(windows)]
+            {
+                // Kill the ENTIRE process tree (python + any children it spawned).
+                // child.kill() only terminates the top process; descendants would
+                // linger as invisible background processes after the app exits.
+                use std::os::windows::process::CommandExt;
+                const CREATE_NO_WINDOW: u32 = 0x0800_0000;
+                let pid = child.id();
+                let _ = Command::new("taskkill")
+                    .args(["/PID", &pid.to_string(), "/T", "/F"])
+                    .creation_flags(CREATE_NO_WINDOW)
+                    .stdin(Stdio::null())
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null())
+                    .status();
+                let _ = child.wait();
+            }
+            #[cfg(not(windows))]
+            {
+                let _ = child.kill();
+                let _ = child.wait();
+            }
         }
         *guard = None;
 
