@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { getConfig } from '@/lib/config'
+import { openExternal } from '@/lib/open-external'
 import { useTranslation } from '@/lib/hooks/use-translation'
 
 /**
@@ -32,7 +33,12 @@ export function useVersionCheck() {
           closeButton: true,
           action: {
             label: t('advanced.viewOnGithub'),
-            onClick: () => window.open('https://github.com/Zxcvb2521/open-notebook', '_blank', 'noopener,noreferrer'),
+            // window.open() is blocked inside the Tauri WebView — use the
+            // open_external command (falls back to window.open in browser).
+            onClick: () =>
+              void openExternal(
+                config.updateUrl || 'https://github.com/Zxcvb2521/open-notebook',
+              ),
           },
           onDismiss: () => sessionStorage.setItem(dismissKey, 'true'),
         })

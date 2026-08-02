@@ -84,7 +84,7 @@ export function SystemInfo() {
           {config?.hasUpdate && (
             <div className="pt-2 border-t">
               <a
-                href={config?.updateUrl || 'https://github.com/lfnovo/open-notebook'}
+                href={config?.updateUrl || 'https://github.com/Zxcvb2521/open-notebook'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-primary hover:underline inline-flex items-center gap-1"

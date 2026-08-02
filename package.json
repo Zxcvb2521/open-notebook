@@ -1,6 +1,6 @@
 {
   "name": "open-notebook",
-  "version": "0.1.0",
+  "version": "1.13.0",
   "description": "Local AI knowledge management system",
   "private": true,
   "type": "module",

@@ -49,7 +49,7 @@ export async function getConfig(): Promise<AppConfig> {
 
   config = {
     apiUrl: '',
-    version: '0.1.0-tauri',
+    version: '1.13.0-tauri',
     buildTime: BUILD_TIME,
     latestVersion,
     hasUpdate,
