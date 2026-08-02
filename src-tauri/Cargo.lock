@@ -2629,7 +2629,7 @@ dependencies = [
 
 [[package]]
 name = "open-notebook"
-version = "1.13.0"
+version = "1.14.0"
 dependencies = [
  "aes-gcm",
  "argon2",

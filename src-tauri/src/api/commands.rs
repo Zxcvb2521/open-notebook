@@ -79,8 +79,8 @@ pub async fn check_updates() -> Result<serde_json::Value, String> {
         .unwrap_or(&default_url)
         .to_string();
 
-    // Semantic compare vs current app version (1.13.0)
-    let current = "1.13.0";
+    // Semantic compare vs current app version (1.14.0)
+    let current = "1.14.0";
     let has_update = compare_versions(&latest, current) > 0;
 
     Ok(serde_json::json!({
