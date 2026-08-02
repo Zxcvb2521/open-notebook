@@ -30,7 +30,7 @@ pub async fn check_updates() -> Result<serde_json::Value, String> {
 
     let client = reqwest::Client::builder()
         .timeout(std::time::Duration::from_secs(10))
-        .user_agent("Open-Notebook-Tauri/1.13.0")
+        .user_agent("Open-Notebook-Tauri/1.14.0")
         .build()
         .map_err(|e| format!("HTTP client: {}", e))?;
 

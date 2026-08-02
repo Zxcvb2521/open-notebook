@@ -39,7 +39,9 @@ export async function getConfig(): Promise<AppConfig> {
         has_update?: boolean
         url?: string
       }
-      latestVersion = info.latest_version || null
+      // Normalise release tag ("win-v1.14.0" -> "1.14.0", "v1.14.0" -> "1.14.0")
+      const raw = info.latest_version || ''
+      latestVersion = raw.replace(/^win-/, '').replace(/^v/, '') || null
       hasUpdate = !!info.has_update
       updateUrl = info.url || null
     } catch (e) {
@@ -49,7 +51,7 @@ export async function getConfig(): Promise<AppConfig> {
 
   config = {
     apiUrl: '',
-    version: '1.13.0-tauri',
+    version: '1.14.0-tauri',
     buildTime: BUILD_TIME,
     latestVersion,
     hasUpdate,
